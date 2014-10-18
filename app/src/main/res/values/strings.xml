@@ -3,6 +3,10 @@
 
     <string name="app_name">FoodPlaces</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Join Group</string>
+    <string name="action_logout">logout</string>
+    <string name="action_profile">Lyee</string>
+    <string name="sponsor">Powered by Yelp</string>
+    <string name="title_activity_join_group_menu">join_group_menu</string>
 
 </resources>

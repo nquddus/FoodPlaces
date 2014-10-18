@@ -1,8 +1,13 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MyActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
-</menu>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<!-- Search, should appear as action button -->
+<item android:id="@+id/action_profile_button"
+    android:title="@string/action_profile"
+    android:showAsAction="ifRoom" />
+<item android:id="@+id/action_logout_button"
+    android:title="@string/action_logout"
+    android:showAsAction="never" />
+    <!-- Settings, should always be in the overflow -->
+<item android:id="@+id/action_settings"
+    android:title="@string/action_settings"
+    android:showAsAction="never" />
+    </menu>
