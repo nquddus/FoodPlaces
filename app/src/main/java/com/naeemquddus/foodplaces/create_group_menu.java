@@ -1,27 +1,25 @@
 package com.naeemquddus.foodplaces;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
-public class main_menu extends Activity {
+public class create_group_menu extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_create_group_menu);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.create_group_menu, menu);
+        return true;
     }
 
     @Override
@@ -34,20 +32,5 @@ public class main_menu extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-    public void joinGroup(View view)
-    {
-        Intent intent = new Intent(this, join_group_menu.class);
-        startActivity(intent);
-    }
-    public void createGroup(View view)
-    {
-        Intent intent = new Intent(this, create_group_menu.class);
-        startActivity(intent);
-    }
-    public void options(View view)
-    {
-        Intent intent = new Intent(this, food_type.class);
-        startActivity(intent);
     }
 }

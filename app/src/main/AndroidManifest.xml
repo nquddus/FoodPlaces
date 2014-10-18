@@ -20,6 +20,14 @@
             android:name=".join_group_menu"
             android:label="@string/title_activity_join_group_menu" >
         </activity>
+        <activity
+            android:name=".create_group_menu"
+            android:label="@string/title_activity_create_group_menu" >
+        </activity>
+        <activity
+            android:name=".food_type"
+            android:label="@string/title_activity_food_type" >
+        </activity>
     </application>
 
 </manifest>
