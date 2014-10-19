@@ -18,34 +18,11 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="33dp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:text="Join Group"
-        android:id="@+id/button1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:onClick="joinGroup"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:text="Create Group"
-        android:id="@+id/button2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="100dp"
-        android:onClick="createGroup"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:text="Options"
+        android:text="I'm hungry!"
         android:id="@+id/button3"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"

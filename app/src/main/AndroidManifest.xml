@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    <uses-sdk
+            android:minSdkVersion="14"
+            android:targetSdkVersion="19" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,14 +21,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".join_group_menu"
-            android:label="@string/title_activity_join_group_menu" >
-        </activity>
-        <activity
-            android:name=".create_group_menu"
-            android:label="@string/title_activity_create_group_menu" >
         </activity>
         <activity
             android:name=".food_type"

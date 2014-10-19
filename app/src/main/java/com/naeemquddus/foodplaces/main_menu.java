@@ -14,13 +14,12 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class main_menu extends Activity implements LocationListener {
-    private double latitudeField;
-    private double longitudeField;
+    static double latitudeField;
+    static double longitudeField;
     private LocationManager locationManager;
     private String provider;
 
@@ -50,18 +49,6 @@ public class main_menu extends Activity implements LocationListener {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-    public void joinGroup(View view)
-    {
-        setupGPS();
-        Intent intent = new Intent(this, join_group_menu.class);
-        startActivity(intent);
-    }
-    public void createGroup(View view)
-    {
-        //updateLocation();
-        Intent intent = new Intent(this, create_group_menu.class);
-        startActivity(intent);
     }
     public void options(View view)
     {
@@ -160,7 +147,4 @@ public class main_menu extends Activity implements LocationListener {
         System.out.println("lat:" + latitudeField + " long:" + longitudeField);
     }
 
-    public void updateLocation() {
-
-    }
 }
