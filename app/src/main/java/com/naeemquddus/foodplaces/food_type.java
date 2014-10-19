@@ -36,12 +36,15 @@ public class food_type extends Activity {
         btnList = new ArrayList<Option>();
         String[] foodCategories = getFoodCategories();
         for(String s : foodCategories){
+
             //Perform yelp lookup here
             //if yelp lookup returned > 1 result, instantiate new button
 
             btnList.add(new Option(s));
         }
     }
+
+
     public String[] getFoodCategories()
     {
         switch(selections.size())
@@ -122,6 +125,7 @@ public class food_type extends Activity {
                 if(opt.button.getTag().equals(v.getTag()))
                 {
                     opt.votes++;
+                    opt.button.setText(opt.name + " " + opt.votes);
                     break;
                 }
             }

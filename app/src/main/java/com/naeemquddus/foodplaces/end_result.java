@@ -15,8 +15,18 @@ public class end_result extends Activity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         selections = new ArrayList<String>();
+        String query  = "";
+        for(String s : selections){
+            query+=s + " ";
+        }
+     //   ArrayList<Restaurant> results = getRestaurant(query.substring(0, query.length()-1));
         setContentView(R.layout.activity_end_result);
     }
+
+    //public ArrayList<Restaurant> getRestaurant(String fullQuery){
+    //    YelpInterface yelp = new YelpInterface();
+    //    return yelp.search(0,0, fullQuery);
+    //}
 
 
     @Override
