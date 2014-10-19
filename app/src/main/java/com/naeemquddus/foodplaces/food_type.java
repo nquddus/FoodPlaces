@@ -1,6 +1,7 @@
 package com.naeemquddus.foodplaces;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,29 +13,91 @@ import java.util.ArrayList;
 
 
 public class food_type extends Activity {
+    ArrayList<String> selections;
     ArrayList<Option> btnList;
     LinearLayout linear;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        createFoodList();
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            selections = extras.getStringArrayList("prev_list");
+            // and get whatever type user account id is
+        }
+        else{
+            selections = new ArrayList<String>();
+        }
+        createFoodList();
         setContentView(R.layout.activity_food_type);
         createButtonList();
     }
     public void createFoodList()
     {
         btnList = new ArrayList<Option>();
-        String[] foodCategories = {
-                "Asian",
-                "European",
-                "Mexican",
-                "Don't care"
-        };
+        String[] foodCategories = getFoodCategories();
         for(String s : foodCategories){
             //Perform yelp lookup here
             //if yelp lookup returned > 1 result, instantiate new button
+
             btnList.add(new Option(s));
         }
+    }
+    public String[] getFoodCategories()
+    {
+        switch(selections.size())
+        {
+            case 0:
+                return new String[]{
+                        "Asian",
+                        "European",
+                        "American",
+                        "Mexican",
+                        "Don't care"
+                };
+            case 1:
+                if(selections.get(0).equals("Asian")){
+                    return new String[]{
+                            "Japanese",
+                            "Chinese",
+                            "Korean",
+                            "Vietnamese",
+                            "Mongolian",
+                            "Indian",
+                            "Thai",
+                            "Don't care"
+                    };
+                }
+                else if(selections.get(0).equals("European")){
+                    return new String[]{
+                            "Spanish",
+                            "Italian",
+                            "French",
+                            "German",
+                            "Irish",
+                            "British",
+                            "Polish"
+                    };
+                }
+                else if(selections.get(0).equals("Mexican")){
+                    return new String[]{
+                            "Tacos",
+                            "Burritos",
+                            "Fajitas",
+                            "Quesadillas",
+                            "Don't care"
+                    };
+                }
+                else if(selections.get(0).equals("American")){
+                    return new String[]{
+                            "Burgers",
+                            "Fries",
+                            "Steak",
+                            "Seafood",
+                            "Don't care"
+                    };
+                }
+        }
+        return new String[] {"You shouldn't see this."};
     }
 
 
@@ -43,6 +106,7 @@ public class food_type extends Activity {
         linear = (LinearLayout) findViewById(R.id.food_list);
         for (int i = 0; i < btnList.size(); i++) {
             btnList.get(i).button = new Button(this);
+            btnList.get(i).button.setText(btnList.get(i).name);
             btnList.get(i).button.setHeight(50);
             btnList.get(i).button.setWidth(50);
             btnList.get(i).button.setTag(i);
@@ -72,6 +136,35 @@ public class food_type extends Activity {
         return true;
     }
 
+    public void advanceFoodType(View view)
+    {
+        String selectedOption = "";
+        int highest_votes = 0;
+        for(Option opt : btnList)
+        {
+            if(!opt.name.equals("Don't care") && opt.votes > highest_votes)
+            {
+                selectedOption = opt.name;
+                highest_votes = opt.votes;
+            }
+        }
+        Intent intent;
+        if(highest_votes == 0)
+        {
+            intent = new Intent(this, end_result.class);
+        }
+        else if(selections.size() > 1){
+            intent = new Intent(this, end_result.class);
+            selections.add(selectedOption);
+        }
+        else{
+            intent = new Intent(this, end_result.class);
+            selections.add(selectedOption);
+        }
+        intent.putStringArrayListExtra("prev_list", selections);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -85,13 +178,11 @@ public class food_type extends Activity {
     }
 
     private class Option{
-        boolean appears;
         String name;
         Button button;
         int votes;
         public Option(String n)
         {
-            appears=false;
             votes = 0;
             name = n;
         }

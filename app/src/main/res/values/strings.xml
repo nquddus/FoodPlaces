@@ -11,6 +11,8 @@
     <string name="title_activity_create_group_menu">create_group_menu</string>
     <string name="title_activity_food_type">food_type</string>
     <string name="option_select">food_type</string>
+    <string name="title_activity_end_result">end_result</string>
+    <string name="end">Congrats you finished your search!</string>
 
 
 </resources>
