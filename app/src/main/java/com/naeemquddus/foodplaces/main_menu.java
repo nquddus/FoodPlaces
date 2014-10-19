@@ -59,11 +59,13 @@ public class main_menu extends Activity implements LocationListener {
     }
     public void createGroup(View view)
     {
+        //updateLocation();
         Intent intent = new Intent(this, create_group_menu.class);
         startActivity(intent);
     }
     public void options(View view)
     {
+        //updateLocation();
         Intent intent = new Intent(this, food_type.class);
         startActivity(intent);
     }
@@ -137,6 +139,7 @@ public class main_menu extends Activity implements LocationListener {
         }
         Toast.makeText(this, "location enabled: "+enabled,
                 Toast.LENGTH_SHORT).show();
+        //updateLocation();
 
         // Get the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -155,5 +158,9 @@ public class main_menu extends Activity implements LocationListener {
         }
         System.out.println("lat:" + latitudeField + " long:" + longitudeField);
         System.out.println("lat:" + latitudeField + " long:" + longitudeField);
+    }
+
+    public void updateLocation() {
+
     }
 }
