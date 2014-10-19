@@ -23,12 +23,14 @@ public class main_menu extends Activity implements LocationListener {
     private double longitudeField;
     private LocationManager locationManager;
     private String provider;
+    private boolean fromSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+        fromSettings = false;
         setupGPS();
     }
 
@@ -59,13 +61,13 @@ public class main_menu extends Activity implements LocationListener {
     }
     public void createGroup(View view)
     {
-        //updateLocation();
+        setupGPS();
         Intent intent = new Intent(this, create_group_menu.class);
         startActivity(intent);
     }
     public void options(View view)
     {
-        //updateLocation();
+        setupGPS();
         Intent intent = new Intent(this, food_type.class);
         startActivity(intent);
     }
@@ -75,6 +77,10 @@ public class main_menu extends Activity implements LocationListener {
     protected void onResume() {
         super.onResume();
         locationManager.requestLocationUpdates(provider, 400, 1, this);
+        if(fromSettings) {
+            setupGPS();
+            fromSettings=false;
+        }
     }
 
     /* Remove the LocationListener updates when Activity is paused */
@@ -122,6 +128,7 @@ public class main_menu extends Activity implements LocationListener {
             builder1.setPositiveButton("Yes",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            fromSettings=true;
                             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                             startActivity(intent);
                             dialog.cancel();
@@ -161,6 +168,22 @@ public class main_menu extends Activity implements LocationListener {
     }
 
     public void updateLocation() {
+        // Get the location manager
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the location provider -> use
+        // default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
 
+        // Initialize the location fields
+        if (location != null) {
+            System.out.println("Provider " + provider + " has been selected.");
+            onLocationChanged(location);
+        } else {
+            System.out.println("Location not available");
+        }
+        System.out.println("lat:" + latitudeField + " long:" + longitudeField);
+        System.out.println("lat:" + latitudeField + " long:" + longitudeField);
     }
 }
