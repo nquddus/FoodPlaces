@@ -53,7 +53,7 @@ public class main_menu extends Activity implements LocationListener {
     }
     public void options(View view)
     {
-        //updateLocation();
+        setupGPS();
         Intent intent = new Intent(this, food_type.class);
         startActivity(intent);
     }
