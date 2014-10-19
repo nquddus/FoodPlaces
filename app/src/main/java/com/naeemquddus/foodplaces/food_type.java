@@ -19,7 +19,6 @@ public class food_type extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createFoodList();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             selections = extras.getStringArrayList("prev_list");
@@ -28,6 +27,7 @@ public class food_type extends Activity {
         else{
             selections = new ArrayList<String>();
         }
+        createFoodList();
         setContentView(R.layout.activity_food_type);
         createButtonList();
     }
