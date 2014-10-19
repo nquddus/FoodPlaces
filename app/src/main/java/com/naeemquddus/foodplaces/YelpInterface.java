@@ -15,6 +15,9 @@ import org.scribe.oauth.OAuthService;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 /**
  * Created by Naeem Quddus on 10/18/2014.
  */
@@ -42,7 +45,7 @@ public class YelpInterface {
     }
 
 
-    public String search(double latitude, double longitude, String term) {
+    public ArrayList<Restaurant> search(double latitude, double longitude, String term) {
         OAuthRequest request = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/search");
             request.addQuerystringParameter("term", term);
             request.addQuerystringParameter("ll", latitude+","+longitude);
@@ -64,15 +67,54 @@ public class YelpInterface {
         }
 
         JSONArray businesses = (JSONArray) json.get("businesses");
+        ArrayList<Restaurant> restaurants = new ArrayList<Restaurant>();
+
         if(businesses != null) {
             for(int i =0;i <businesses.size(); i++) {
-                System.out.println(i + " :: " + businesses.get(i));
+                /*//System.out.println(i + " :: " + businesses.get(i));
+                System.out.println(businesses.get(i) + "\n");
+                JSONObject business = (JSONObject)businesses.get(i);
+                for(String s : (Set<String>)business.keySet()) {
+                    System.out.println(s + " :: " + ((business.get(s) != null) ? business.get(s) : "" ));
+                }
+                System.out.println(business.get("\n\nname"));
+                System.out.println(business.get("location"));
+                System.out.println(business.get("rating"));
+                System.out.println(business.get("phone"));
+                System.out.println(business.get("image_url"));
+                System.out.println(business.get("url"));
+                System.out.println(business.get("snippet_text") + "\n\n\n");*/
+                JSONObject business;
+                business = (JSONObject)businesses.get(i);
+                String id = (String)business.get("id");
+                OAuthRequest businessRequest = new OAuthRequest(Verb.GET, "http://api.yelp.com/v2/business/" + id);
+                service.signRequest(this.accessToken, businessRequest);
+                Response businessResponse = businessRequest.send();
+                String businessJson = businessResponse.getBody();
+                //System.out.println(businessJson);
+                try {
+                    json = (JSONObject) parser.parse(businessJson);
+                } catch (ParseException pe) {
+                    System.out.println("Holee shit");
+                }
+                String name = (String)json.get("name");
+                String location = (String)((JSONArray)((JSONObject)json.get("location")).get("address")).get(0);
+                //System.out.println(location);
+                restaurants.add(new Restaurant(
+                        name,
+                        location,
+                        String.valueOf(json.get("rating")),
+                        (String)json.get("phone"),
+                        (String)json.get("image_url"),
+                        (String)json.get("snippet_text"),
+                        (String)json.get("url")
+                 ));
             }
         } else {
             System.out.println("Someting wong");
         }
-
-            return "";
+        //System.out.println(restaurants.size());
+        return restaurants;
     }
 
 }

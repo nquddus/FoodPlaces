@@ -1,7 +1,9 @@
 package com.naeemquddus.foodplaces;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -28,23 +30,6 @@ public class main_menu extends Activity implements LocationListener {
         setContentView(R.layout.activity_my);
 
         setupGPS();
-
-        // Get the location manager
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the location provider -> use
-        // default
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        // Initialize the location fields
-        if (location != null) {
-            System.out.println("Provider " + provider + " has been selected.");
-            onLocationChanged(location);
-        } else {
-            System.out.println("Location not available");
-        }
-        System.out.println("lat:" + latitudeField + " long:" + longitudeField);
     }
 
 
@@ -126,14 +111,49 @@ public class main_menu extends Activity implements LocationListener {
         boolean enabled = service
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        // check if enabled and if not send user to the GSP settings
+        // check if enabled and if not send user to the GPS settings
         // to do display a dialog and suggesting to go to the settings
         if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+            builder1.setMessage("Do you want to enable GPS?");
+            builder1.setCancelable(true);
+            builder1.setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                            startActivity(intent);
+                            dialog.cancel();
+                        }
+                    });
+            builder1.setNegativeButton("No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
         }
         Toast.makeText(this, "location enabled: "+enabled,
                 Toast.LENGTH_SHORT).show();
+
+        // Get the location manager
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the location provider -> use
+        // default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        // Initialize the location fields
+        if (location != null) {
+            System.out.println("Provider " + provider + " has been selected.");
+            onLocationChanged(location);
+        } else {
+            System.out.println("Location not available");
+        }
+        System.out.println("lat:" + latitudeField + " long:" + longitudeField);
         System.out.println("lat:" + latitudeField + " long:" + longitudeField);
     }
 }
