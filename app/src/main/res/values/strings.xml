@@ -8,5 +8,9 @@
     <string name="action_profile">Lyee</string>
     <string name="sponsor">Powered by Yelp</string>
     <string name="title_activity_join_group_menu">join_group_menu</string>
+    <string name="title_activity_create_group_menu">create_group_menu</string>
+    <string name="title_activity_food_type">food_type</string>
+    <string name="option_select">food_type</string>
+
 
 </resources>
