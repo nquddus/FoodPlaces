@@ -14,13 +14,12 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class main_menu extends Activity implements LocationListener {
-    private double latitudeField;
-    private double longitudeField;
+    static double latitudeField;
+    static double longitudeField;
     private LocationManager locationManager;
     private String provider;
     private boolean fromSettings;
@@ -30,7 +29,6 @@ public class main_menu extends Activity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        fromSettings = false;
         setupGPS();
     }
 
@@ -53,21 +51,9 @@ public class main_menu extends Activity implements LocationListener {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void joinGroup(View view)
-    {
-        setupGPS();
-        Intent intent = new Intent(this, join_group_menu.class);
-        startActivity(intent);
-    }
-    public void createGroup(View view)
-    {
-        setupGPS();
-        Intent intent = new Intent(this, create_group_menu.class);
-        startActivity(intent);
-    }
     public void options(View view)
     {
-        setupGPS();
+        //updateLocation();
         Intent intent = new Intent(this, food_type.class);
         startActivity(intent);
     }

@@ -153,19 +153,24 @@ public class food_type extends Activity {
             }
         }
         Intent intent;
+        ArrayList<String> selectionsClone = new ArrayList<String>();
+        for(String s:selections)
+        {
+            selectionsClone.add(s);
+        }
         if(highest_votes == 0)
         {
             intent = new Intent(this, end_result.class);
         }
-        else if(selections.size() > 1){
+        else if(selections.size() >= 1){
             intent = new Intent(this, end_result.class);
-            selections.add(selectedOption);
+            selectionsClone.add(selectedOption);
         }
         else{
-            intent = new Intent(this, end_result.class);
-            selections.add(selectedOption);
+            intent = new Intent(this, food_type.class);
+            selectionsClone.add(selectedOption);
         }
-        intent.putStringArrayListExtra("prev_list", selections);
+        intent.putStringArrayListExtra("prev_list", selectionsClone);
         startActivity(intent);
     }
 
