@@ -1,6 +1,7 @@
 package com.naeemquddus.foodplaces;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -53,9 +54,13 @@ public class main_menu extends Activity implements LocationListener {
     }
     public void options(View view)
     {
-        setupGPS();
+        if(fromSettings) {
+            setupGPS();
+            fromSettings=false;
+        }
         Intent intent = new Intent(this, food_type.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.open_next, R.anim.close_main);
     }
 
     /* Request updates at startup */
@@ -63,10 +68,10 @@ public class main_menu extends Activity implements LocationListener {
     protected void onResume() {
         super.onResume();
         locationManager.requestLocationUpdates(provider, 400, 1, this);
-        if(fromSettings) {
-            setupGPS();
-            fromSettings=false;
-        }
+        //if(fromSettings) {
+        //    setupGPS();
+        //    fromSettings=false;
+        //}
     }
 
     /* Remove the LocationListener updates when Activity is paused */
@@ -130,30 +135,10 @@ public class main_menu extends Activity implements LocationListener {
             AlertDialog alert11 = builder1.create();
             alert11.show();
         }
-        Toast.makeText(this, "location enabled: "+enabled,
-                Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "location enabled: "+enabled,
+        //        Toast.LENGTH_SHORT).show();
         //updateLocation();
 
-        // Get the location manager
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the location provider -> use
-        // default
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        // Initialize the location fields
-        if (location != null) {
-            System.out.println("Provider " + provider + " has been selected.");
-            onLocationChanged(location);
-        } else {
-            System.out.println("Location not available");
-        }
-        System.out.println("lat:" + latitudeField + " long:" + longitudeField);
-        System.out.println("lat:" + latitudeField + " long:" + longitudeField);
-    }
-
-    public void updateLocation() {
         // Get the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Define the criteria how to select the location provider -> use

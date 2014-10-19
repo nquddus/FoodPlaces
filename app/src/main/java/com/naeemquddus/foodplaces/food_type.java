@@ -2,6 +2,7 @@ package com.naeemquddus.foodplaces;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class food_type extends Activity {
         createFoodList();
         setContentView(R.layout.activity_food_type);
         createButtonList();
+        findViewById(R.id.submit).getBackground().setColorFilter(new LightingColorFilter(0xFF000000, 0xFF013B59));
     }
     public void createFoodList()
     {
@@ -172,6 +174,7 @@ public class food_type extends Activity {
         }
         intent.putStringArrayListExtra("prev_list", selectionsClone);
         startActivity(intent);
+        overridePendingTransition(R.anim.open_next, R.anim.close_main);
     }
 
     @Override
@@ -195,5 +198,11 @@ public class food_type extends Activity {
             votes = 0;
             name = n;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition (R.anim.open_main, R.anim.close_next);
     }
 }
